@@ -1,0 +1,14 @@
+name: Test Release
+runs:
+  using: composite
+  steps:
+    - name: Install and Start Redis
+      shell: bash
+      env:
+        VERSION: 8.2.7
+        PROJECT: redis
+        GH_ORG: redis
+      run: make start
+    - name: Test Release
+      shell: bash
+      run:  ./mvnw --batch-mode --settings release-train-settings.xml clean verify --activate-profiles releaseTrain
